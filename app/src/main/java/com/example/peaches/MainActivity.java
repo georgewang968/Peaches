@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_NAME = "Peaches";
     public static final String CHANNEL_DESC = "Peaches Notification Channel";
 
+    public static final String fileName = "messages.txt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // create notification
     private void displayNotification(){
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_peach)
                     .setContentTitle("Peaches")
-                    .setContentText("Ben has a chode dick.")
+                    .setContentText(MessageManager.ReadFile(MainActivity.this))
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
