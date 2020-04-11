@@ -6,13 +6,17 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageButton image_button_settings;
 
     public static final String CHANNEL_ID = "peaches_1";
     public static final String CHANNEL_NAME = "Peaches";
@@ -25,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        image_button_settings = (ImageButton) findViewById(R.id.image_button_settings);
+        image_button_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSettings();
+            }
+        });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
@@ -57,5 +68,10 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
         mNotificationMgr.notify(1, mBuilder.build());
 
+    }
+
+    public void openSettings() {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
     }
 }
