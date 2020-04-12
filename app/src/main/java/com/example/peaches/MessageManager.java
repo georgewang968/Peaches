@@ -1,5 +1,6 @@
 package com.example.peaches;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,23 +17,27 @@ public class MessageManager {
     private final static String fileName = "messages.txt";
     private final static String TAG = MessageManager.class.getName();
     private final static String arrayName = "uniqueLines";
+    private final static String arraySizeName = "arraySize";
 
 
     public static String ReadFile(Context context){
-        //final String path = context.getFilesDir().getAbsolutePath();
-
         //check if first time running
-        SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean isFirstRun = pref.getBoolean("FIRSTRUN", true);
         if (isFirstRun) {
             // makes not first run anymore
-            SharedPreferences.Editor editor = wmbPreference.edit();
+            SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("FIRSTRUN", false);
             editor.apply();
 
             // if first run, create array for unique lines
             int[] uniqueLines = createArray(context);
             saveArray(uniqueLines, arrayName, context);
+
+            // length of unique lines
+            editor.putInt(arraySizeName, uniqueLines.length);
+            editor.apply();
 
         }
 
@@ -44,26 +49,31 @@ public class MessageManager {
             BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
 
-            // get random line
-            // first find length of file
-
-            int totalLines = 0;
-            while (reader.readLine() != null)
-                totalLines++;
-            reader.close();
-
-            // now pull random line
-            reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
-            int pos = (int)(Math.random() * totalLines);
-            for (int i = 0; i < pos; i++)
-                reader.readLine();
-
-
-
             // get array from preferences memory
             int[] uniqueLines = loadArray(arrayName, context);
-
+            // get arraySize which is length of uniqueLines
+            int arraySize = pref.getInt(arraySizeName, 0);
+            if (arraySize == 0) {
+                uniqueLines = createArray(context);
+                saveArray(uniqueLines, arrayName, context);
+                arraySize = uniqueLines.length;
+            }
+            // get random line
+            int pos = (int)(Math.random() * arraySize);
+            for (int i = 0; i < uniqueLines[pos]; i++)
+                reader.readLine();
             line = reader.readLine();
+            // now erase pos by switching with last relevant position in array
+            int temp = uniqueLines[pos];
+            uniqueLines[pos] = uniqueLines[arraySize - 1];
+            uniqueLines[arraySize - 1] = temp;
+            saveArray(uniqueLines, arrayName, context);
+
+            // now save arraySize as 1 less than original
+            arraySize--;
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt(arraySizeName, arraySize);
+            editor.apply();
 
             reader.close();
         }
@@ -102,21 +112,17 @@ public class MessageManager {
             // open file
             BufferedReader reader = null;
             reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
-
             // find length of file
             int totalLines = 0;
             while (reader.readLine() != null)
                 totalLines++;
             reader.close();
-
             // make length of file array and fill in all nums of lines
             int[] uniqueLines = new int [totalLines];
             for (int i = 0; i < totalLines; i++){
                 uniqueLines[i] = i;
             }
-
             return uniqueLines;
-
         }
         catch(FileNotFoundException e){
             Log.d(TAG, e.getMessage());
@@ -124,7 +130,6 @@ public class MessageManager {
         catch(IOException e) {
             Log.d(TAG, e.getMessage());
         }
-
         // if fails to make array
         return new int [0];
     }
