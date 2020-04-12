@@ -20,7 +20,7 @@ public class MessageManager {
     private final static String arraySizeName = "arraySize";
 
 
-    public static String ReadFile(Context context){
+    public static String getLine(Context context){
         //check if first time running
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 
