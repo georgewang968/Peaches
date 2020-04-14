@@ -15,7 +15,7 @@ public class MessageManager {
     private final static String TAG = MessageManager.class.getName();
 
 
-    public static String ReadFile(Context context){
+    public static String ReadFile(MainActivity context){
         //final String path = context.getFilesDir().getAbsolutePath();
         String line = "";
 
