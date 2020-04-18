@@ -23,6 +23,7 @@ public class SendNotification extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         final String fileName = "messages.txt";
 
         /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

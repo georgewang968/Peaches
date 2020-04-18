@@ -18,6 +18,7 @@ public class MessageManager {
     private final static String TAG = MessageManager.class.getName();
     private final static String arrayName = "uniqueLines";
     private final static String arraySizeName = "arraySize";
+    private final static char newlineSymbol = '*';
 
 
     public static String getLine(Context context){
@@ -83,7 +84,7 @@ public class MessageManager {
         catch(IOException e){
             Log.d(TAG, e.getMessage());
         }
-        return line;
+        return addNewlines(line);
     }
 
     // save unique lines to memory
@@ -132,6 +133,10 @@ public class MessageManager {
         }
         // if fails to make array
         return new int [0];
+    }
+
+    private static String addNewlines(String message){
+        return message.replace(newlineSymbol, '\n');
     }
 }
 

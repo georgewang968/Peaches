@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
@@ -60,11 +61,16 @@ public class MainActivity extends AppCompatActivity {
     // create notification
     public void displayNotification(){
 
+        // sets message to textview and displays notification with message
+        String message = MessageManager.getLine(getApplicationContext());
+        TextView messageText = (TextView)findViewById(R.id.message_text);
+        messageText.setText(message);
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_peach)
                     .setContentTitle("Peaches")
-                    .setContentText(MessageManager.ReadFile(MainActivity.this))
+                    .setContentText(message)
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);

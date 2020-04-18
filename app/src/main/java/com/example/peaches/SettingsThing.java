@@ -81,6 +81,7 @@ public class SettingsThing extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         timePicker = (TimePicker) findViewById(R.id.timePicker);
 
+
         Intent intent = new Intent(this, SendNotification.class);
         intent.putExtra("notificationId", notificationId);
 
