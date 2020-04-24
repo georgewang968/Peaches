@@ -20,7 +20,7 @@ import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static MainActivity instance;
+    private static MainActivity ins;
 
     private ImageButton image_button_settings;
 
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ins = this;
         setContentView(R.layout.activity_main);
 
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static MainActivity getInstance() {
-        return instance;
+        return ins;
     }
 
     public void makeToast() {

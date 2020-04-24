@@ -26,43 +26,11 @@ public class SendNotification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        final String fileName = "messages.txt";
-
-
-
-        //int notificationId = intent.getIntExtra("notificationId", 0);
+        /*final String fileName = "messages.txt";
 
         String message = MessageManager.getLine(context.getApplicationContext());
         //TextView messageText = (TextView)findViewById(R.id.message_text);
         //messageText.setText(message);
-
-        /*Intent mainIntent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, mainIntent, 0);
-
-
-
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setSmallIcon(R.drawable.ic_peach)
-                .setContentTitle("Peaches")
-                .setContentText(message)
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setContentIntent(contentIntent);
-
-        NotificationManager myNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(CHANNEL_DESC);
-            //NotificationManager manager = context.getSystemService(NotificationManager.class);
-            //assert manager != null;
-            myNotificationManager.createNotificationChannel(channel);
-
-        }
-
-        //assert myNotificationManager != null;
-        myNotificationManager.notify(notificationId, builder.build());*/
 
         NotificationManager mNotificationManager;
 
@@ -92,9 +60,11 @@ public class SendNotification extends BroadcastReceiver {
             mBuilder.setChannelId(channelId);
         }
 
-        mNotificationManager.notify(0, mBuilder.build());
+        mNotificationManager.notify(0, mBuilder.build());*/
 
-        Toast.makeText(context, "does this even work?",Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "New Message",Toast.LENGTH_LONG).show();
+
+        MainActivity.getInstance().displayNotification();
     }
 
 
