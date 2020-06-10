@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +27,9 @@ public class SendNotification extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        /*final String fileName = "messages.txt";
+        final String fileName = "messages.txt";
 
-        String message = MessageManager.getLine(context.getApplicationContext());
+        /*String message = MessageManager.getLine(context.getApplicationContext());
         //TextView messageText = (TextView)findViewById(R.id.message_text);
         //messageText.setText(message);
 
@@ -62,7 +63,8 @@ public class SendNotification extends BroadcastReceiver {
 
         mNotificationManager.notify(0, mBuilder.build());*/
 
-        Toast.makeText(context, "New Message",Toast.LENGTH_LONG).show();
+
+        Toast.makeText(context, "New Peach!",Toast.LENGTH_LONG).show();
 
         MainActivity.getInstance().displayNotification();
     }
